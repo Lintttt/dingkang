@@ -46,10 +46,10 @@ class market extends control
         
         /* Get customers. */
         $condition=$param===0?'1':$this->session->marketQuery;
-       // print($this->session->marketQuery);
-        //print($condition);
+        print($this->session->marketQuery);
+        print($condition);
         $customers = $this->market->getcustomers($pager,$orderBy,$condition);
-        $saler=$this->market->getsaler();
+        //$saler=$this->market->getsaler();
       //  print_r($saler);
         $this->view->searchForm  = $this->fetch('search', 'buildForm', $this->config->market->mycustomers->search);
         $this->view->orderBy     = $orderBy;

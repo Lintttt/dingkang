@@ -13,7 +13,7 @@ global $lang, $app;
 
 $config->market->mycustomers = new stdClass();
 $config->market->mycustomers->search['module']                = 'market';
-$config->market->mycustomers->search['fields']['ID']          = $lang->market->ID;
+$config->market->mycustomers->search['fields']['customerID']  = $lang->market->ID;
 $config->market->mycustomers->search['fields']['name']        = $lang->market->name;
 $config->market->mycustomers->search['fields']['sex']         = $lang->market->sex;
 $config->market->mycustomers->search['fields']['age']         = $lang->market->age;
