@@ -36,7 +36,7 @@ $config->pm->myprojects->search['params']['unreturedmoney']   = array('operator'
 
 $config->pm->logistics = new stdClass();
 $config->pm->logistics->search['module'] = 'logistics';
-$config->pm->logistics->search['fields']['lname']             = $lang->pm->lname;
+$config->pm->logistics->search['fields']['name']              = $lang->pm->lname;
 $config->pm->logistics->search['fields']['expressID']         = $lang->pm->expressID;
 $config->pm->logistics->search['fields']['projectID']         = $lang->pm->projectID;
 $config->pm->logistics->search['fields']['senderID']          = $lang->pm->senderID;
@@ -49,7 +49,7 @@ $config->pm->logistics->search['fields']['receivetime']       = $lang->pm->recei
 $config->pm->logistics->search['fields']['status']            = $lang->pm->status;
 $config->pm->logistics->search['fields']['content']           = $lang->pm->content;
 
-$config->pm->logistics->search['params']['lname']             = array('operator' => '=',  'control' => 'input',  'values' => '');
+$config->pm->logistics->search['params']['name']             = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['expressID']         = array('operator' => 'include',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['projectID']         = array('operator' => '=',  'control' => 'select',  'values' => '', 'class' => 'form-control chosen');
 $config->pm->logistics->search['params']['senderID']          = array('operator' => '=',  'control' => 'select',  'values' => '', 'class' => 'form-control chosen');

@@ -68,7 +68,12 @@ class pmModel extends model
     }
     
      public function getpms($pager,$orderBy,$condition)
-    {
+    {   
+//         print("$this->dao->select('*')->from(TABLE_PROJECT)
+//                            ->where($condition)
+//                            ->orderBy($orderBy)
+//                            ->page($pager)
+//                            ->fetchAll()");
         return  $this->dao->select('*')->from(TABLE_PROJECT)
                             ->where($condition)
                             ->orderBy($orderBy)
@@ -86,11 +91,11 @@ class pmModel extends model
     
   public function getlogistics($pager,$orderBy,$condition)
     { 
-        print("$this->dao->select('*')->from(TABLE_LOGISTICS)
-                            ->where($condition)
-                            ->orderBy($orderBy)
-                            ->page($pager)
-                            ->fetchAll()");
+//        print("$this->dao->select('*')->from(TABLE_LOGISTICS)
+//                            ->where($condition)
+//                            ->orderBy($orderBy)
+//                            ->page($pager)
+//                            ->fetchAll()");
          return  $this->dao->select('*')->from(TABLE_LOGISTICS)
                             ->where($condition)
                             ->orderBy($orderBy)

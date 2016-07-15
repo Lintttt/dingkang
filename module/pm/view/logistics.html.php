@@ -31,7 +31,7 @@ include '../../common/view/header.html.php';
     <tr class='colhead'>
       <?php $vars = "param=$param&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}";?> 
       <th class="w-id"><?php common::printorderlink('projectID',         $orderBy, $vars, $lang->pm->projectID);?></th>
-      <th class="w-100px"><?php common::printOrderLink('lname',          $orderBy, $vars, $lang->pm->lname);?></th>
+      <th class="w-100px"><?php common::printOrderLink('name',           $orderBy, $vars, $lang->pm->lname);?></th>
       <th class="w-100px"><?php common::printOrderLink('expressID',      $orderBy, $vars, $lang->pm->expressID);?></th>
       <th class="w-100px"><?php common::printOrderLink('senderID',       $orderBy, $vars, $lang->pm->senderID);?></th>
       <th class="w-100px"><?php common::printOrderLink('receiver',       $orderBy, $vars, $lang->pm->receiver);?></th>

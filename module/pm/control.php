@@ -31,30 +31,31 @@ class pm extends control {
     }
 
     public function myprojects($param = 0, $orderBy = 'projectID', $recTotal = 0, $recPerPage = 20, $pageID = 1) {
-        $this->loadModel('search');
         /* Set the pager. */
-        $this->app->loadClass('pager', $static                                                                = true);
-        $pager                                                                 = pager::init($recTotal, $recPerPage, $pageID);
+        $this->app->loadClass('pager', $static = true);
+        $pager = pager::init($recTotal, $recPerPage, $pageID);
         //get projectList('id' => 'projectID')
-        $projectList                                                           = $this->pm->getProject();
+        $projectList = $this->pm->getProject();
         //Set the search 
-        $this->config->pm->myprojects->search['actionURL']                     = $this->createLink('pm', 'myprojects', "param=myQueryID");
-        $this->config->pm->myprojects->search['queryID']                       = $param;
+        $this->loadModel('search');
+        //$queryID = $param;
+        $this->config->pm->myprojects->search['actionURL'] = $this->createLink('pm', 'myprojects', "param=myQueryID");
+        $this->config->pm->myprojects->search['queryID'] = $param;
         $this->config->pm->myprojects->search['params']['projectID']['values'] = $projectList;
         $this->loadModel('search')->setSearchParams($this->config->pm->myprojects->search);
 
         $condition = !$param ? '1' : $this->session->pmQuery;
         // print($this->session->pmQuery);
         /* Get pms. */
-        $pms       = $this->pm->getpms($pager, $orderBy, $condition);
+        $pms = $this->pm->getpms($pager, $orderBy, $condition);
 
         $this->view->searchForm = $this->fetch('search', 'buildForm', $this->config->pm->myprojects->search);
-        $this->session->set('pmForm', '');
-        $this->view->orderBy    = $orderBy;
-        $this->view->pager      = $pager;
-        $this->view->param      = $param;
-        $this->view->pms        = $pms;
-        $this->view->title      = $this->lang->pm->myprojects;
+        $this->session->set('myQueryID', '');
+        $this->view->orderBy = $orderBy;
+        $this->view->pager = $pager;
+        $this->view->param = $param;
+        $this->view->pms = $pms;
+        $this->view->title = $this->lang->pm->myprojects;
         $this->view->position[] = $this->lang->pm->mypms;
         $this->display();
     }
@@ -74,8 +75,8 @@ class pm extends control {
                 die(print(js::locate($this->createLink('pm', 'myprojects'))));
             }
         }
-        
-        $this->view->title      = $this->lang->pm->createpm;
+
+        $this->view->title = $this->lang->pm->createpm;
         $this->view->position[] = $this->lang->pm->createpm;
         $this->display();
     }
@@ -120,18 +121,18 @@ class pm extends control {
     public function file_view($ID, $orderBy = 'uploaddate', $recTotal = 0, $recPerPage = 20, $pageID = 1) {
 
         /* Set the pager. */
-        $this->app->loadClass('pager', $static    = true);
-        $pager     = pager::init($recTotal, $recPerPage, $pageID);
-        $pjID      = $this->pm->getById($ID);
+        $this->app->loadClass('pager', $static = true);
+        $pager = pager::init($recTotal, $recPerPage, $pageID);
+        $pjID = $this->pm->getById($ID);
         $filelists = $this->pm->getFile($ID, $orderBy, $pager);
 
-        $this->view->title      = $this->lang->pm->file_view;
+        $this->view->title = $this->lang->pm->file_view;
         $this->view->position[] = $this->lang->pm->file_view;
-        $this->view->pjID       = $pjID->projectID;
-        $this->view->filelists  = $filelists;
-        $this->view->orderBy    = $orderBy;
-        $this->view->pager      = $pager;
-        $this->view->ID         = $ID;
+        $this->view->pjID = $pjID->projectID;
+        $this->view->filelists = $filelists;
+        $this->view->orderBy = $orderBy;
+        $this->view->pager = $pager;
+        $this->view->ID = $ID;
         $this->display();
     }
 
@@ -139,13 +140,13 @@ class pm extends control {
         if ($_POST) {
 
             if ($this->post->content != '') {
-                $file              = $this->file->getUpload('btn_file');
-                $file              = $file[0];
+                $file = $this->file->getUpload('btn_file');
+                $file = $file[0];
                 //print_r($_FILES['btn_file']['name']);
-                $filename          = $this->pm->get_basename($_FILES['btn_file']['name']);
-                $path              = $this->file->savePath . $file['pathname'] . $filename;
-                $tmparr            = split('[/]', $path);
-                $arrnum            = count($tmparr);
+                $filename = $this->pm->get_basename($_FILES['btn_file']['name']);
+                $path = $this->file->savePath . $file['pathname'] . $filename;
+                $tmparr = split('[/]', $path);
+                $arrnum = count($tmparr);
                 //print_r($path);
                 $_SESSION[pathpic] = $tmparr[$arrnum - 3] . '/' . $tmparr[$arrnum - 2] . '/' . $tmparr[$arrnum - 1];
 
@@ -155,7 +156,7 @@ class pm extends control {
                 }
             }
             $type = $_FILES['btn_file']['type'];
-            $add  = $this->pm->addfile($ID, $type, $filename);
+            $add = $this->pm->addfile($ID, $type, $filename);
             if (dao::isError())
                 die(js::error(dao::getError()));
             else {
@@ -194,39 +195,39 @@ class pm extends control {
     }
 
     public function logistics($param = 0, $orderBy = 'projectID', $recTotal = 0, $recPerPage = 20, $pageID = 1) {
-        $this->loadModel('search');
         /* Set the pager. */
         $this->app->loadClass('pager', $static = true);
-        $pager  = pager::init($recTotal, $recPerPage, $pageID);
+        $pager = pager::init($recTotal, $recPerPage, $pageID);
 
         $projectAll = $this->pm->getProjectAll();
         foreach ($projectAll as $v) {
             $projectList[$v->id] = $v->projectID;
         }
         //$userList=  $this->pm->getUser();
-        // print_r($projectList);
-        $this->config->pm->logistics->search['actionURL']                     = $this->createLink('pm', 'logistics', "param=myQueryID");
-        $this->config->pm->logistics->search['queryID']                       = $param;
+        //print_r($projectList);
+        $this->loadModel('search');
+        $queryID = $param;
+        $this->config->pm->logistics->search['actionURL'] = $this->createLink('pm', 'logistics', "param=myQueryID");
+        $this->config->pm->logistics->search['queryID'] = $param;
         $this->config->pm->logistics->search['params']['projectID']['values'] = $projectList;
         //$this->config->pm->logistics->search['params']['senderID']['values'] = $userList;
         $this->loadModel('search')->setSearchParams($this->config->pm->logistics->search);
-
-        /* Get pms. */
+        
+       // print($param);
         $condition = !$param ? '1' : $this->session->pmQuery;
-        //print($this->session->pmQuery);
+      //  print($this->session->pmQuery);
 
         $logisticslist = $this->pm->getlogistics($pager, $orderBy, $condition);
 
-
-        $this->view->searchForm    = $this->fetch('search', 'buildForm', $this->config->pm->logistics->search);
-        $this->session->set('pmForm', '');
-        $this->view->orderBy       = $orderBy;
-        $this->view->pager         = $pager;
-        $this->view->param         = $param;
+        $this->view->searchForm = $this->fetch('search', 'buildForm', $this->config->pm->logistics->search);
+        $this->session->set('pmForm', ''); 
+        $this->view->orderBy = $orderBy;
+        $this->view->pager = $pager;
+        $this->view->param = $param;
         $this->view->logisticslist = $logisticslist;
-        $this->view->projectList   = $projectList;
-        $this->view->title         = $this->lang->pm->logistics;
-        $this->view->position[]    = $this->lang->pm->logistics;
+        $this->view->projectList = $projectList;
+        $this->view->title = $this->lang->pm->logistics;
+        $this->view->position[] = $this->lang->pm->logistics;
         $this->display();
     }
 
@@ -243,8 +244,8 @@ class pm extends control {
         $projectList = $this->pm->getProject();
 
         $this->view->projectList = $projectList;
-        $this->view->title       = $this->lang->pm->createlogistics;
-        $this->view->position[]  = $this->lang->pm->createlogistics;
+        $this->view->title = $this->lang->pm->createlogistics;
+        $this->view->position[] = $this->lang->pm->createlogistics;
         $this->display();
     }
 
@@ -264,20 +265,20 @@ class pm extends control {
         $projectList = $this->pm->getProject();
 
         $this->view->projectList = $projectList;
-        $this->view->title       = $this->lang->pm->editlogistics;
-        $this->view->position[]  = $this->lang->pm->editlogistics;
-        $this->view->logistics   = $this->pm->getonelogistics($ID);
+        $this->view->title = $this->lang->pm->editlogistics;
+        $this->view->position[] = $this->lang->pm->editlogistics;
+        $this->view->logistics = $this->pm->getonelogistics($ID);
         $this->display();
     }
 
     public function searchlogistics($ID) {
         $projectList = $this->pm->getProject();
-        $logistics   = $this->pm->getonelogistics($ID);
+        $logistics = $this->pm->getonelogistics($ID);
 
         $this->view->projectList = $projectList;
-        $this->view->logistics   = $logistics;
-        $this->view->title       = $this->lang->pm->searchlogistics;
-        $this->view->position[]  = $this->lang->pm->searchlogistics;
+        $this->view->logistics = $logistics;
+        $this->view->title = $this->lang->pm->searchlogistics;
+        $this->view->position[] = $this->lang->pm->searchlogistics;
         $this->display();
     }
 
@@ -288,8 +289,8 @@ class pm extends control {
             die(js::reload('parent.parent'));
         }
 
-        $this->view->logistics  = $this->pm->getOnelogistics($ID);
-        $this->view->title      = $this->lang->pm->searchlogistics;
+        $this->view->logistics = $this->pm->getOnelogistics($ID);
+        $this->view->title = $this->lang->pm->searchlogistics;
         $this->view->position[] = $this->lang->pm->searchlogistics;
         $this->display();
     }
