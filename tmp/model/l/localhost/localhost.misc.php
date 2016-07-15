@@ -1,5 +1,5 @@
 <?php
-helper::import('D:\xampp\htdocs\dingkang\module\misc\model.php');
+helper::import('F:\XAMPP\htdocs\dingkang\module\misc\model.php');
 class extmiscModel extends miscModel 
 {
 public function hello2()
