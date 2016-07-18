@@ -34,8 +34,12 @@ class pm extends control {
         /* Set the pager. */
         $this->app->loadClass('pager', $static = true);
         $pager = pager::init($recTotal, $recPerPage, $pageID);
-        //get projectList('id' => 'projectID')
-        $projectList = $this->pm->getProject();
+         
+        $projectAll = $this->pm->getProjectAll();
+        $projectList[] = '';
+        foreach ($projectAll as $v) {
+            $projectList[$v->projectID] = $v->projectID;
+        }
         //Set the search 
         $this->loadModel('search');
         //$queryID = $param;
@@ -50,7 +54,7 @@ class pm extends control {
         $pms = $this->pm->getpms($pager, $orderBy, $condition);
 
         $this->view->searchForm = $this->fetch('search', 'buildForm', $this->config->pm->myprojects->search);
-        $this->session->set('myQueryID', '');
+        $this->session->set('pmForm', '');
         $this->view->orderBy = $orderBy;
         $this->view->pager = $pager;
         $this->view->param = $param;
@@ -138,7 +142,6 @@ class pm extends control {
 
     public function file_add($ID) {
         if ($_POST) {
-
             if ($this->post->content != '') {
                 $file = $this->file->getUpload('btn_file');
                 $file = $file[0];
@@ -165,6 +168,26 @@ class pm extends control {
             }
         }
         $this->display();
+    }
+    
+    public function readfile($path) {
+        $filepath =   $path;    //要预览的文件名
+        echo $filepath;
+        if(file_exists($filepath)){
+            
+        } 
+        else {
+            echo "<p>Unable to open remote file.\n";
+            exit;
+        }
+
+//        $file = fopen( $filepath, "r") or die("文件打开失败！");
+//        if (!$file) {
+//            echo "<p>Unable to open remote file.\n";
+//            exit;
+//        }
+        
+        fclose($file);
     }
 
     public function downloadfile($path, $type) {
@@ -198,36 +221,44 @@ class pm extends control {
         /* Set the pager. */
         $this->app->loadClass('pager', $static = true);
         $pager = pager::init($recTotal, $recPerPage, $pageID);
-
+        
         $projectAll = $this->pm->getProjectAll();
+        $projectList[] = '';
         foreach ($projectAll as $v) {
             $projectList[$v->id] = $v->projectID;
         }
-        //$userList=  $this->pm->getUser();
-        //print_r($projectList);
+        
+        $userListAll=  $this->pm->getUser();
+        $userList[] = '';
+        foreach ($userListAll as $v) {
+            $userList[$v->id] = $v->realname;
+        }
+        //print_r($userList);
+        
         $this->loadModel('search');
-        $queryID = $param;
+        //$queryID = $param;
         $this->config->pm->logistics->search['actionURL'] = $this->createLink('pm', 'logistics', "param=myQueryID");
         $this->config->pm->logistics->search['queryID'] = $param;
         $this->config->pm->logistics->search['params']['projectID']['values'] = $projectList;
-        //$this->config->pm->logistics->search['params']['senderID']['values'] = $userList;
-        $this->loadModel('search')->setSearchParams($this->config->pm->logistics->search);
+        $this->config->pm->logistics->search['params']['confirmor']['values'] = $userList;
+        $this->config->pm->logistics->search['params']['receiver']['values']  = $userList;
+        //$this->loadModel('search')->setSearchParams($this->config->pm->logistics->search);
         
-       // print($param);
-        $condition = !$param ? '1' : $this->session->pmQuery;
-      //  print($this->session->pmQuery);
-
+       $condition = !$param ? '1' : $this->session->pmQuery;
+        // print($this->session->pmQuery);
+        
         $logisticslist = $this->pm->getlogistics($pager, $orderBy, $condition);
-
-        $this->view->searchForm = $this->fetch('search', 'buildForm', $this->config->pm->logistics->search);
+ 
+        $this->view->searchForm    = $this->fetch('search', 'buildForm', $this->config->pm->logistics->search);
         $this->session->set('pmForm', ''); 
-        $this->view->orderBy = $orderBy;
-        $this->view->pager = $pager;
-        $this->view->param = $param;
+        $this->view->orderBy       = $orderBy;
+        $this->view->pager         = $pager;
+        $this->view->param         = $param;
         $this->view->logisticslist = $logisticslist;
-        $this->view->projectList = $projectList;
-        $this->view->title = $this->lang->pm->logistics;
-        $this->view->position[] = $this->lang->pm->logistics;
+        $this->view->projectList   = $projectList;
+        $this->view->project       = $project;
+        $this->view->title         = $this->lang->pm->logistics;
+        $this->view->position[]    = $this->lang->pm->logistics;
         $this->display();
     }
 
@@ -241,7 +272,12 @@ class pm extends control {
                 die(print(js::locate($this->createLink('pm', 'logistics'), 'parent')));
             }
         }
-        $projectList = $this->pm->getProject();
+        
+        $projectAll = $this->pm->getProjectAll();
+        $projectList[] = '';
+        foreach ($projectAll as $v) {
+            $projectList[$v->id] = $v->projectID;
+        }
 
         $this->view->projectList = $projectList;
         $this->view->title = $this->lang->pm->createlogistics;
@@ -262,7 +298,11 @@ class pm extends control {
             }
         }
 
-        $projectList = $this->pm->getProject();
+        $projectAll = $this->pm->getProjectAll();
+        $projectList[] = '';
+        foreach ($projectAll as $v) {
+            $projectList[$v->id] = $v->projectID;
+        }
 
         $this->view->projectList = $projectList;
         $this->view->title = $this->lang->pm->editlogistics;
@@ -272,7 +312,12 @@ class pm extends control {
     }
 
     public function searchlogistics($ID) {
-        $projectList = $this->pm->getProject();
+        $projectAll = $this->pm->getProjectAll();
+        $projectList[] = '';
+        foreach ($projectAll as $v) {
+            $projectList[$v->id] = $v->projectID;
+        }
+        
         $logistics = $this->pm->getonelogistics($ID);
 
         $this->view->projectList = $projectList;

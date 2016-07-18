@@ -58,8 +58,15 @@ include '../../common/view/header.html.php';
         <td><?php echo $pm->uninvoicemoney?></td>
         <td><?php echo $pm->unreturedmoney?></td>
         <td class='text-center'> 
-        <?php common::printIcon('pm', 'file_view', "ID=$pm->id", '', 'list ', 'file', '', 'iframe', 'yes', "data-width='900'");?>
-        <?php common::printIcon('pm', 'file_add', "ID=$pm->id",'' , 'list', 'plus', '', 'iframe', 'yes',"data-width='600'");?>
+           <?php
+                if($this->pm->iffile($pm->id)){
+                    common::printIcon('pm', 'file_add', "ID=$pm->id",'' , 'list', 'plus', '', 'iframe', 'yes',"data-width='600'");
+                }
+                else{
+                    common::printIcon('pm', 'file_view', "ID=$pm->id", '', 'list ', 'file', '', 'iframe', 'yes', "data-width='900'");
+                    common::printIcon('pm', 'file_add', "ID=$pm->id",'' , 'list', 'plus', '', 'iframe', 'yes',"data-width='600'");
+                }
+            ?>
         </td>
         <td title="<?php echo $pm->remark?>"><?php echo $pm->remark?></td>
         <td>

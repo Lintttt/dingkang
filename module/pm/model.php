@@ -24,22 +24,16 @@ class pmModel extends model
      * @return object
      */
     public function getUser() {
-        return $this->dao->select('id','realname')
+        return $this->dao->select('*')
                 ->from(TABLE_USER)
-                ->fetchPairs('id','realname');
+                ->fetchAll();
     }
     
-    public function getProject() {
-         return  $this->dao->select('projectID')
-                     ->from(TABLE_PROJECT)
-                     ->fetchPairs('projectID');
-    }
     public function getProjectAll() {
          return  $this->dao->select('*')
                      ->from(TABLE_PROJECT)
                      ->fetchAll();
     }
-    
     
     public function getById($ID) {
         //echo($ID);
@@ -195,7 +189,17 @@ class pmModel extends model
         $addfile ->type= $type;
         $addfile ->name= $filename;
        // print_r($addfile);
-       return $this->dao->insert(TABLE_FILE)->data($addfile)->exec();
+        
+        return $this->dao->insert(TABLE_FILE)->data($addfile)->exec();
+    }
+    
+    public function iffile($ID) {
+        if(empty($this->dao->select('*')->from(TABLE_FILE)->where('pjID')->eq($ID)->fetch())){
+            return true;
+        }
+        else {
+            return FALSE;
+        }
     }
     
     function get_basename($filename){  

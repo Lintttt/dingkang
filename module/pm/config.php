@@ -35,7 +35,7 @@ $config->pm->myprojects->search['params']['unreturedmoney']   = array('operator'
 
 
 $config->pm->logistics = new stdClass();
-$config->pm->logistics->search['module'] = 'logistics';
+$config->pm->logistics->search['module'] = 'pm';
 $config->pm->logistics->search['fields']['name']              = $lang->pm->lname;
 $config->pm->logistics->search['fields']['expressID']         = $lang->pm->expressID;
 $config->pm->logistics->search['fields']['projectID']         = $lang->pm->projectID;
@@ -52,9 +52,9 @@ $config->pm->logistics->search['fields']['content']           = $lang->pm->conte
 $config->pm->logistics->search['params']['name']             = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['expressID']         = array('operator' => 'include',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['projectID']         = array('operator' => '=',  'control' => 'select',  'values' => '', 'class' => 'form-control chosen');
-$config->pm->logistics->search['params']['senderID']          = array('operator' => '=',  'control' => 'select',  'values' => '', 'class' => 'form-control chosen');
-$config->pm->logistics->search['params']['receiver']          = array('operator' => '=',  'control' => 'input',  'values' => '');
-$config->pm->logistics->search['params']['confirmor']         = array('operator' => '=',  'control' => 'input',  'values' => '');
+$config->pm->logistics->search['params']['senderID']          = array('operator' => '=',  'control' => 'input',  'values' => '');
+$config->pm->logistics->search['params']['receiver']          = array('operator' => '=',  'control' => 'select',  'values' => '','class' => 'form-control chosen');
+$config->pm->logistics->search['params']['confirmor']         = array('operator' => '=',  'control' => 'select',  'values' => '','class' => 'form-control chosen');
 $config->pm->logistics->search['params']['sendaddress']       = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['receiveaddress']    = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->pm->logistics->search['params']['sendtime']          = array('operator' => '=',  'control' => 'input',  'values' => '', 'class' => 'date');

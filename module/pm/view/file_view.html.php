@@ -30,7 +30,7 @@
     <td class='text-center'><?php echo $filelist->uploaddate;?></td>
     <td>
       <?php echo html::a($this->createLink('pm', 'downloadfile', "path=$filelist->filepath&type=$filelist->type"." "), '<i class="icon-download"></i>', '', "title='下载文件' class='btn-icon'");?>
-      <?php echo html::a($this->createLink('', '', "path=$filelist->filepath"." "), '<i class="icon-file"></i>', '_blank', "title='预览文件' class='btn-icon'");?>
+      <?php echo html::a($this->createLink('pm', 'readfile', "path=$filelist->filepath"." "), '<i class="icon-file"></i>', '_blank', "title='预览文件' class='btn-icon'");?>
       <?php echo html::a($this->createLink('', '', "pj_number=$pj_num&path=$dirpath"." "), '<i class="icon-envelope"></i>', '', "title='发送检测报告' class='btn-icon'");?>
       <?php echo html::a($this->createLink('pm', 'filedelete', "fileID=$filelist->id&path=$filelist->filepath"." "), '<i class="icon-remove"></i>', '', "title='删除文件' class='btn-icon'");?>
   </td>
