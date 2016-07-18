@@ -278,10 +278,18 @@ class pm extends control {
         foreach ($projectAll as $v) {
             $projectList[$v->id] = $v->projectID;
         }
-
+        
+        $userListAll=  $this->pm->getUser();
+        $userList[] = '';
+        foreach ($userListAll as $v) {
+            $userList[$v->id] = $v->realname;
+        }
+        //print_r($phoneList);
+        
+        $this->view->userList    = $userList;
         $this->view->projectList = $projectList;
-        $this->view->title = $this->lang->pm->createlogistics;
-        $this->view->position[] = $this->lang->pm->createlogistics;
+        $this->view->title       = $this->lang->pm->createlogistics;
+        $this->view->position[]  = $this->lang->pm->createlogistics;
         $this->display();
     }
 
@@ -338,6 +346,12 @@ class pm extends control {
         $this->view->title = $this->lang->pm->searchlogistics;
         $this->view->position[] = $this->lang->pm->searchlogistics;
         $this->display();
+    }
+    
+    public function gettelephone($ID) {
+       // echo 'ok';echo $ID;
+        $phone= $this->dao->select('phone')->from(TABLE_USER)->where('id')->eq($ID)->fetch('phone');
+       echo json_encode($phone);
     }
 
 }

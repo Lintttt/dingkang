@@ -44,6 +44,7 @@ include '../../common/view/chosen.html.php';
                 </tr>
             </thead>
             <?php $projectList = array('' => '')+$projectList;?>
+            <?php $userList = array('' => '')+$userList;?>
             <?php for($i=0;$i<10;$i++):?>
             <tbody>
             <tr class="text-center">
@@ -52,9 +53,9 @@ include '../../common/view/chosen.html.php';
                     <td ><?php echo html::input("name[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("expressID[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("senderID[$i]",'',"class='form-control'")?></td>
-                    <td ><?php echo html::input("receiver[$i]",'',"class='form-control'")?></td>
+                    <td class='text-left' style='overflow: visible'><?php echo html::select("receiver[$i]", $userList, '', "class='form-control chosen' onChange=getphone(this) ")?></td>
                     <td ><?php echo html::input("rphone[$i]",'',"class='form-control'")?></td>
-                    <td ><?php echo html::input("confirmor[$i]",'',"class='form-control'")?></td>
+                    <td class='text-left' style='overflow: visible'><?php echo html::select("confirmor[$i]", $userList, '', "class='form-control chosen' onChange=getphone(this) ")?></td>
                     <td ><?php echo html::input("cphone[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("sendaddress[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("receiveaddress[$i]",'',"class='form-control'")?></td>
@@ -77,5 +78,18 @@ include '../../common/view/chosen.html.php';
         </table>
     </form>
 </div>
+
+<script>
+    function getphone(obj){
+        var id=obj.value;
+        //$(obj).parentsUntil("tr").next().find("input").css({"color":"red","border":"2px solid red"});
+        //$(obj).parentsUntil("tr").next().find("input").val('8');
+        var url=createLink('pm','gettelephone','ID='+id);
+        $.getJSON(url,function(result){
+        $(obj).parentsUntil("tr").next().find("input").val(result);
+        //alert(result);
+        });
+    }
+</script>
 
 <?php include '../../common/view/footer.html.php';?>
