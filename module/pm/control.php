@@ -187,7 +187,7 @@ class pm extends control {
 //            exit;
 //        }
         
-        fclose($file);
+       // fclose($file);
     }
 
     public function downloadfile($path, $type) {
@@ -206,9 +206,9 @@ class pm extends control {
         }
     }
 
-    public function filedelete($fileID, $path) {
+    public function filedelete($fileID) {
 
-        $this->pm->deletefile($fileID, $path);
+        $this->pm->deletefile($fileID);
         if (dao::isError())
             die(js::error(dao::getError()));
         else {

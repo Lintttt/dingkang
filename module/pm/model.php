@@ -175,7 +175,7 @@ class pmModel extends model
                 ->exec();
     }
     
-    public function deletefile($fileID,$path) {
+    public function deletefile($fileID) {
         return $this->dao->delete()->from(TABLE_FILE)->where('id')->eq($fileID)->exec();
     }
     

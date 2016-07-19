@@ -25,9 +25,9 @@ include '../../common/view/chosen.html.php';
             <thead>
                 <tr>
                     <th class="w-40px"><?php echo 'ID'?></th>
-                    <th class="w-120px"><?php echo $lang->pm->projectID?><span class='required'></span></th>
                     <th class="w-120px"><?php echo $lang->pm->lname?><span class='required'></span></th>
                     <th class="w-120px"><?php echo $lang->pm->expressID?><span class='required'></span></th>
+                    <th class="w-120px"><?php echo $lang->pm->projectID?><span class='required'></span></th>
                     <th class="w-120px"><?php echo $lang->pm->senderID?></th>
                     <th class="w-120px"><?php echo $lang->pm->receiver?></th>
                     <th class="w-120px"><?php echo $lang->pm->rphone?></th>
@@ -48,14 +48,14 @@ include '../../common/view/chosen.html.php';
             <?php for($i=0;$i<10;$i++):?>
             <tbody>
             <tr class="text-center">
-                    <td><?php echo $i+1;?></td>
-                    <td class='text-left' style='overflow: visible'><?php echo html::select("projectID[$i]", $projectList, '', "class='form-control chosen'")?></td>
+                <td><?php echo $i+1;?></td>
                     <td ><?php echo html::input("name[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("expressID[$i]",'',"class='form-control'")?></td>
+                    <td class='text-left' style='overflow: visible'><?php echo html::select("projectID[$i]", $projectList, '', "class='form-control chosen'")?></td>
                     <td ><?php echo html::input("senderID[$i]",'',"class='form-control'")?></td>
-                    <td class='text-left' style='overflow: visible'><?php echo html::select("receiver[$i]", $userList, '', "class='form-control chosen' onChange=getphone(this) ")?></td>
+                    <td ><?php echo html::input("receiver[$i]", '', "class='form-control'  ")?></td>
                     <td ><?php echo html::input("rphone[$i]",'',"class='form-control'")?></td>
-                    <td class='text-left' style='overflow: visible'><?php echo html::select("confirmor[$i]", $userList, '', "class='form-control chosen' onChange=getphone(this) ")?></td>
+                    <td ><?php echo html::input("confirmor[$i]", '', "class='form-control'  ")?></td>
                     <td ><?php echo html::input("cphone[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("sendaddress[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("receiveaddress[$i]",'',"class='form-control'")?></td>
@@ -79,17 +79,17 @@ include '../../common/view/chosen.html.php';
     </form>
 </div>
 
-<script>
+<!--<script>
     function getphone(obj){
         var id=obj.value;
         //$(obj).parentsUntil("tr").next().find("input").css({"color":"red","border":"2px solid red"});
-        //$(obj).parentsUntil("tr").next().find("input").val('8');
+        //$(obj).parentsUntil("tr").next().find("input").val();
         var url=createLink('pm','gettelephone','ID='+id);
         $.getJSON(url,function(result){
         $(obj).parentsUntil("tr").next().find("input").val(result);
         //alert(result);
         });
     }
-</script>
+</script>-->
 
 <?php include '../../common/view/footer.html.php';?>

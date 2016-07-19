@@ -32,7 +32,7 @@
       <?php echo html::a($this->createLink('pm', 'downloadfile', "path=$filelist->filepath&type=$filelist->type"." "), '<i class="icon-download"></i>', '', "title='下载文件' class='btn-icon'");?>
       <?php echo html::a($this->createLink('pm', 'readfile', "path=$filelist->filepath"." "), '<i class="icon-file"></i>', '_blank', "title='预览文件' class='btn-icon'");?>
       <?php echo html::a($this->createLink('', '', "pj_number=$pj_num&path=$dirpath"." "), '<i class="icon-envelope"></i>', '', "title='发送检测报告' class='btn-icon'");?>
-      <?php echo html::a($this->createLink('pm', 'filedelete', "fileID=$filelist->id&path=$filelist->filepath"." "), '<i class="icon-remove"></i>', '', "title='删除文件' class='btn-icon'");?>
+      <?php echo html::a("#", '<i class="icon-remove"></i>', '', "title='删除文件' class='btn-icon' onclick='return delete_file($filelist->id)'");?>
   </td>
   </tr>
   <?php endforeach;?>
@@ -40,12 +40,24 @@
   <tfoot>
     <tr>
       <td colspan='5'>
-      <?php echo $pager->show();?>
+      <?php echo $pager->show();//$this->createLink('pm', 'filedelete', "fileID=$filelist->id&path=$filelist->filepath"." "),?>
       </td>
     </tr>
     </tfoot>
     </table>
   </form>
 </div>
+
+<script>
+    function delete_file(ID){
+        var id=ID;
+        if(confirm("是否删除该文件？")){
+            window.location.href=createLink('pm','filedelete','ID='+id);
+        }
+        else{
+            return ;
+        }
+    }
+</script>
 <?php include '../../common/view/footer.html.php';?>
 
