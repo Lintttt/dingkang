@@ -28,6 +28,7 @@ include '../../common/view/chosen.html.php';
                     <th class="w-120px"><?php echo $lang->pm->lname?><span class='required'></span></th>
                     <th class="w-120px"><?php echo $lang->pm->expressID?><span class='required'></span></th>
                     <th class="w-120px"><?php echo $lang->pm->projectID?><span class='required'></span></th>
+                    <th class="w-120px"><?php echo $lang->pm->status?></th>
                     <th class="w-120px"><?php echo $lang->pm->senderID?></th>
                     <th class="w-120px"><?php echo $lang->pm->receiver?></th>
                     <th class="w-120px"><?php echo $lang->pm->rphone?></th>
@@ -37,7 +38,6 @@ include '../../common/view/chosen.html.php';
                     <th class="w-120px"><?php echo $lang->pm->receiveaddress?></th>
                     <th class="w-120px"><?php echo $lang->pm->sendtime?></th>
                     <th class="w-120px"><?php echo $lang->pm->receivetime?></th>
-                    <th class="w-120px"><?php echo $lang->pm->status?></th>
                     <th class="w-120px"><?php echo $lang->pm->remark?></th>
                     <th class="w-120px"><?php echo $lang->pm->content?></th>
                     <th class="w-120px"><?php echo $lang->pm->confirmcontent?></th>
@@ -47,11 +47,12 @@ include '../../common/view/chosen.html.php';
             <?php $userList = array('' => '')+$userList;?>
             <?php for($i=0;$i<10;$i++):?>
             <tbody>
-            <tr class="text-center">
+            <tr class="text-center"> 
                 <td><?php echo $i+1;?></td>
                     <td ><?php echo html::input("name[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("expressID[$i]",'',"class='form-control'")?></td>
                     <td class='text-left' style='overflow: visible'><?php echo html::select("projectID[$i]", $projectList, '', "class='form-control chosen'")?></td>
+                    <td class='text-left' style='overflow: visible'><?php echo html::select("status[$i]",$this->lang->pm->statusList,'',"class='form-control chosen'")?></td>
                     <td ><?php echo html::input("senderID[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("receiver[$i]", '', "class='form-control'  ")?></td>
                     <td ><?php echo html::input("rphone[$i]",'',"class='form-control'")?></td>
@@ -62,7 +63,6 @@ include '../../common/view/chosen.html.php';
                     <td ><?php echo html::input("sendtime[$i]",'',"class='form-control form-date'")?></td>
                     <td ><?php echo html::input("receivetime[$i]",'',"class='form-control form-date'")?></td>
                     <td ><?php echo html::input("remark[$i]",'',"class='form-control'")?></td>
-                    <td ><?php echo html::input("status[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("content[$i]",'',"class='form-control'")?></td>
                     <td ><?php echo html::input("confirmcontent[$i]",'',"class='form-control'")?></td>
             </tr>

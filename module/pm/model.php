@@ -34,7 +34,18 @@ class pmModel extends model
                      ->from(TABLE_PROJECT)
                      ->fetchAll();
     }
-    
+    public function getOnepf($ID) {
+        return $this->dao->select('*')
+             ->from(TABLE_PLATFORM)
+             ->where('customerID')
+             ->eq($ID)
+             ->fetch();
+    }
+     public function getPFAll() {
+         return  $this->dao->select('*')
+                     ->from(TABLE_PLATFORM)
+                     ->fetchAll();
+    }
     public function getById($ID) {
         //echo($ID);
         return $this->dao->select('projectID')
@@ -52,6 +63,7 @@ class pmModel extends model
                      ->page($pager)
                      ->fetchAll();
     }
+    
     
     public function getOnepm($ID) {
         return $this->dao->select('*')
@@ -74,6 +86,15 @@ class pmModel extends model
                             ->page($pager)
                             ->fetchAll();
     }   
+    
+    public function getpfs($pager,$orderBy,$condition)
+    {   
+        return  $this->dao->select('*')->from(TABLE_PLATFORM)
+                            ->where($condition)
+                            ->orderBy($orderBy)
+                            ->page($pager)
+                            ->fetchAll();
+    }
     
     public function getonelogistics($ID) {
         return $this->dao->select('*')
@@ -104,7 +125,13 @@ class pmModel extends model
                 ->batchCheck($this->config->pm->createpm->requiredFields,'notempty')
                  ->exec();
     }
-    
+     public function createpf(){
+        $pf  = fixer::input('post')->get();  
+        //$pm->creator=$this->app->user->id;
+        $this->dao->insert(TABLE_PLATFORM)->data($pf)
+                ->batchCheck($this->config->pm->createpf->requiredFields,'notempty')
+                 ->exec();
+    }
     public function createlogistics() {
         $logisticsList=  fixer::input('post')->get();
         $data  = array();
@@ -149,6 +176,14 @@ class pmModel extends model
             ->where('id')->eq($ID)
             ->exec();
     }  
+    public function updatepf($ID) {
+        $pf  = fixer::input('post')->get();  
+        $this->dao->update(TABLE_PLATFORM)->data($pf)
+            ->autoCheck()
+            ->batchCheck($this->config->pm->editpf->requiredFields,'notempty')
+            ->where('customerID')->eq($ID)
+            ->exec();
+    }
     
     public function updatelogistics($ID) {
         $log  = fixer::input('post')->get();  
@@ -166,7 +201,13 @@ class pmModel extends model
                 ->eq($ID)
                 ->exec();
     }
-    
+    public function deletepf($ID) {
+        $this->dao->delete()
+                ->from(TABLE_PLATFORM)
+                ->where('customerID')
+                ->eq($ID)
+                ->exec();
+    }
     public function deletelogistics($ID) {
         $this->dao->delete()
                 ->from(TABLE_LOGISTICS)

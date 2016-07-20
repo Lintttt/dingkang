@@ -121,6 +121,7 @@ if(file_exists($myConfig)) include $myConfig;
 if(!isset($config->db->prefix)) $config->db->prefix = 'zt_';
 
 /* Define the tables. */
+define('TABLE_PLATFORM',      '`' . $config->db->prefix . 'customerb`');
 define('TABLE_CUSTOMER',      '`' . $config->db->prefix . 'customer`');
 define('TABLE_LOGISTICS',     '`' . $config->db->prefix . 'logistics`');
 define('TABLE_SAMPLE',        '`' . $config->db->prefix . 'sample`');

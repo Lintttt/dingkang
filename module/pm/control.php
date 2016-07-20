@@ -41,7 +41,7 @@ class pm extends control {
             $projectList[$v->projectID] = $v->projectID;
         }
         //Set the search 
-        $this->loadModel('search');
+        //$this->loadModel('search');
         //$queryID = $param;
         $this->config->pm->myprojects->search['actionURL'] = $this->createLink('pm', 'myprojects', "param=myQueryID");
         $this->config->pm->myprojects->search['queryID'] = $param;
@@ -242,6 +242,8 @@ class pm extends control {
         $this->config->pm->logistics->search['params']['projectID']['values'] = $projectList;
         $this->config->pm->logistics->search['params']['confirmor']['values'] = $userList;
         $this->config->pm->logistics->search['params']['receiver']['values']  = $userList;
+        $this->config->pm->logistics->search['params']['status']['values'] = $this->lang->pm->statusList;
+
         //$this->loadModel('search')->setSearchParams($this->config->pm->logistics->search);
         
        $condition = !$param ? '1' : $this->session->pmQuery;
@@ -353,5 +355,91 @@ class pm extends control {
         $phone= $this->dao->select('phone')->from(TABLE_USER)->where('id')->eq($ID)->fetch('phone');
        echo json_encode($phone);
     }
+    
+    public function platform($param = 0, $orderBy = 'customerID', $recTotal = 0, $recPerPage = 20, $pageID = 1 ) {
+        /* Set the pager. */
+        $this->app->loadClass('pager', $static = true);
+        $pager = pager::init($recTotal, $recPerPage, $pageID);
+        
+        $pfAll = $this->pm->getPFAll();
+        $pfList[] = '';
+        foreach ($pfAll as $v) {
+            $pfList[$v->customerID] = $v->customerID;
+        }
+        
+        $condition = !$param ? '1' : $this->session->pmQuery;
+        // print($this->session->pmQuery);
+        $pfs = $this->pm->getpfs($pager, $orderBy, $condition);
+        
+        $this->config->pm->platform->search['actionURL'] = $this->createLink('pm', 'platform', "param=myQueryID");
+        $this->config->pm->platform->search['queryID'] = $param;
+        $this->config->pm->platform->search['params']['customerID']['values'] = $pfList;
+        $this->loadModel('search')->setSearchParams($this->config->pm->platform->search);
+        
+        $this->view->searchForm   = $this->fetch('search', 'buildForm', $this->config->pm->platform->search);
+        $this->session->set('pmForm', '');
+        $this->view->orderBy      = $orderBy;
+        $this->view->pager        = $pager;
+        $this->view->param        = $param;
+        $this->view->pfs          = $pfs;
+        $this->view->title        = $this->lang->pm->platforms;
+        $this->view->position[]   = $this->lang->pm->myplatform;
+        $this->display();
+    }
+    
+    public function createpf() {
+        //if have a POST
+        if (!empty($_POST)) {
+            //connet Mysql and insert into table project
+            $this->pm->createpf();
+            //to judge error
+            if (dao::isError()) {
+                print(js::error(dao::getError()));
+                die(print(js::locate('back'))); //back to the previous page
+            }
+            else {
+                print(js::alert('添加成功！'));
+                die(print(js::locate($this->createLink('pm', 'platform'))));
+            }
+        }
 
+        $this->view->title = $this->lang->pm->createpf;
+        $this->view->position[] = $this->lang->pm->createpf;
+        $this->display();
+    }
+     public function editpf($ID) {
+        //if have a POST
+        if (!empty($_POST)) {
+            //connet Mysql and update table project
+            $this->pm->updatepf($ID);
+            //to judge error
+            if (dao::isError()) {
+                die(print(js::error(dao::getError())));
+                //die(print(js::locate('back'))); //back to the previous page
+            }
+            else {
+                print(js::alert('编辑成功！'));
+                die(js::reload('parent.parent'));
+            }
+        }
+
+        $this->view->pfs = $this->pm->getOnepf($ID);
+        $this->display();
+    }
+    
+     public function searchpf($ID) {
+        $this->view->pfs = $this->pm->getOnepf($ID);
+        $this->display();
+    }
+    
+    public function deletepf($ID) {
+
+        if (!empty($_POST)) {
+            $this->pm->deletepf($ID);
+            die(js::reload('parent.parent'));
+        }
+
+        $this->view->pfs = $this->pm->getOnepf($ID);
+        $this->display();
+    }
 }

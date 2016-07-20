@@ -63,7 +63,7 @@
       </tr>
       <tr>
         <th><?php echo $lang->pm->status;?></th>
-        <td><?php echo html::input('status', "$logistics->status",  "class='form-control' autocomplete='off'");?></td>
+        <td><?php echo html::select('status',$lang->pm->statusList, "$logistics->status",  "class='form-control chosen' autocomplete='off'");?></td>
       </tr>
       <tr>
         <th><?php echo $lang->pm->content;?></th>

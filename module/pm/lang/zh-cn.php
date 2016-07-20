@@ -4,6 +4,8 @@ $lang->pm->common = '项目';
 $lang->pm->mypms        = '项目列表';
 $lang->pm->myprojects   = '我的项目';
 $lang->pm->logistics    = '物流表';
+$lang->pm->myplatform   = '客户列表';
+$lang->pm->platforms    = '云平台客户';
 
 
 //项目
@@ -44,6 +46,18 @@ $lang->pm->remark='备注';
 $lang->pm->status='状态';
 $lang->pm->content='物流内容';
 $lang->pm->confirmcontent='确认内容';
+$lang->pm->statusList=array(" ","未发出"=>"未发出","寄送中"=>"寄送中","已签收"=>"已签收","完成确认"=>"完成确认");
+
+$lang->pm->pfID='客户编号';
+$lang->pm->pfname='客户名称';
+$lang->pm->pfaddress='地址';
+$lang->pm->pfEmail='Email';
+$lang->pm->pfphone='联系方式';
+
+$lang->pm->createpf='添加客户';
+$lang->pm->searchpf='查看客户';
+$lang->pm->editpf='编辑客户';
+$lang->pm->deletepf='删除客户';
 
 $lang->pm->createpm='添加项目';
 $lang->pm->searchpm='查看项目';
@@ -73,4 +87,8 @@ $lang->project->unreturedmoney='未回款金额';
 $lang->logistics->projectID='项目编号';
 $lang->logistics->name='物流名称';
 $lang->logistics->expressID='快递单号';
+
+$lang->customerb->customerID= '客户编号';
+$lang->customerb->name= '客户名称';
+        
 

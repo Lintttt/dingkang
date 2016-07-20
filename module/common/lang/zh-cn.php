@@ -192,6 +192,7 @@ $lang->pm->menu->list        = array('link' => '项目' . $lang->arrow , 'fixed'
 $lang->pm->menu->myprojects  ='我的项目|pm|myprojects';
 $lang->pm->menu->sample      ='我的样品|pm|mysample';
 $lang->pm->menu->logistics   ='物流|pm|logistics';
+$lang->pm->menu->platform    ='云平台客户|pm|platform';
 
 
 //样品菜单设置
